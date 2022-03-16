@@ -4,7 +4,6 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 import character
-import position
 
 
 def print_grid(w, h, char=None):
@@ -23,24 +22,54 @@ def print_grid(w, h, char=None):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    basicNpc = character.Character("Harold", 2, 1, position.Position(5, 5))
-    print_grid(15, 10, basicNpc)
+    # basicNpc = character.Character("Harold", 2, 1, position.Position(5, 5))
+    # print_grid(15, 10, basicNpc)
+    #
+    # basicNpc.move(2, -1, 15, 10)
+    # print_grid(15, 10, basicNpc)
+    #
+    # print("\n\n===== Bottom right =====")
+    # basicNpc.move(100, -100, 15, 10)
+    # print_grid(15, 10, basicNpc)
+    #
+    # print("\n\n===== Top right =====")
+    # basicNpc.move(100, 100, 15, 10)
+    # print_grid(15, 10, basicNpc)
+    #
+    # print("\n\n===== Bottom left =====")
+    # basicNpc.move(-100, -100, 15, 10)
+    # print_grid(15, 10, basicNpc)
+    #
+    # print("\n\n===== Top left =====")
+    # basicNpc.move(-100, 100, 15, 10)
+    # print_grid(15, 10, basicNpc)
+    # Simple pygame program
 
-    basicNpc.move(2, -1, 15, 10)
-    print_grid(15, 10, basicNpc)
+    # Import and initialize the pygame library
+    import pygame
 
-    print("\n\n===== Bottom right =====")
-    basicNpc.move(100, -100, 15, 10)
-    print_grid(15, 10, basicNpc)
+    pygame.init()
 
-    print("\n\n===== Top right =====")
-    basicNpc.move(100, 100, 15, 10)
-    print_grid(15, 10, basicNpc)
+    # Set up the drawing window
+    screen = pygame.display.set_mode([1280, 720])
 
-    print("\n\n===== Bottom left =====")
-    basicNpc.move(-100, -100, 15, 10)
-    print_grid(15, 10, basicNpc)
+    # Run until the user asks to quit
+    running = True
+    while running:
 
-    print("\n\n===== Top left =====")
-    basicNpc.move(-100, 100, 15, 10)
-    print_grid(15, 10, basicNpc)
+        # Did the user click the window close button?
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        # Fill the background with white
+        screen.fill((255, 255, 255))
+
+        # Draw a solid blue circle in the center
+        pygame.draw.circle(screen, (0, 0, 255), (250, 250), 75)
+
+        # Flip the display
+        pygame.display.flip()
+
+    # Done! Time to quit.
+    pygame.quit()
