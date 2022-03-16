@@ -3,23 +3,33 @@ import pygame
 
 class Character(pygame.sprite.Sprite):
 
-    def __init__(self, name="Default NPC", height=0, width=0):
+    def __init__(self, name="Default NPC", height=50, width=20):
         super(Character, self).__init__()
         self.name = name
-        self.surf = pygame.Surface((20, 50))
+        self.surf = pygame.Surface((width, height))
         self.surf.fill((255, 255, 255))
         self.rect = self.surf.get_rect()
 
-    def move(self, dx, dy, surface=None):
+    def move(self, dx, dy, min_x=None, max_x=None, min_y=None, max_y=None):
         """ Moves the character's location with optional bounds """
         self.rect.move_ip(dx, 0)
         self.rect.move_ip(0, dy)
-        if surface is not None:
-            if self.rect.left < surface.get_rect().left:
-                self.rect.left = surface.get_rect().left
-            if self.rect.right > surface.get_rect().right:
-                self.rect.right = surface.get_rect().left
-            if self.rect.bottom < surface.get_rect().bottom:
-                self.rect.bottom = surface.get_rect().bottom
-            if self.rect.top > surface.get_rect().top:
-                self.rect.top = surface.get_rect().top
+        if min_x is not None and max_x is not None and min_y is not None and max_y is not None:
+            if self.rect.left < min_x:
+                self.rect.left = min_x
+            if self.rect.right > max_x:
+                self.rect.right = max_x
+            if self.rect.bottom > max_y:
+                self.rect.bottom = max_y
+            if self.rect.top < min_y:
+                self.rect.top = min_y
+
+    def update(self, keys, screen_width, screen_height):
+        if keys[pygame.K_w]:
+            self.move(0, -1, 0, screen_width, 0, screen_height)
+        if keys[pygame.K_a]:
+            self.move(-1, 0, 0, screen_width, 0, screen_height)
+        if keys[pygame.K_s]:
+            self.move(0, 1, 0, screen_width, 0, screen_height)
+        if keys[pygame.K_d]:
+            self.move(1, 0, 0, screen_width, 0, screen_height)
