@@ -2,7 +2,6 @@
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-import random
 
 import character
 import pygame
@@ -47,3 +46,4 @@ if __name__ == '__main__':
 
     # Done! Time to quit.
     pygame.quit()
+    print("Bye bye Cage!")

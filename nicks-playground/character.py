@@ -32,10 +32,9 @@ class Character(pygame.sprite.Sprite):
     def update(self, keys, screen_width, screen_height):
         # Update speed first
         if keys[pygame.K_KP_PLUS]:
-            self.speed = min (self.speed + 1, MAX_SPEED)
+            self.speed = min(self.speed + 1, MAX_SPEED)
         if keys[pygame.K_KP_MINUS]:
             self.speed = max(self.speed - 1, MIN_SPEED)
-
         # Update position
         if keys[pygame.K_w]:
             self.move(0, -self.speed, 0, screen_width, 0, screen_height)
