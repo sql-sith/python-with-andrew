@@ -3,7 +3,6 @@
 These concepts have been stolen, almost in their entirety, and certainly whole-heartedly,
 from https://www.thepythoncode.com/article/using-github-api-in-python.
 """
-import base64
 from getpass import getpass
 from pprint import pprint
 
@@ -72,9 +71,9 @@ def get_gh_target_info(gh_token):
         gh_target_json.raise_for_status()
         gh_target_data = gh_target_json.json()
 
-    except RequestException as e:
-        raise ValueError(f"Call to {url} failed.") from e
     except HTTPError as e:
+        raise ValueError(f"Call to {url} failed.") from e
+    except RequestException as e:
         raise ValueError(f"Call to {url} failed.") from e
 
     return gh_target_data
@@ -120,6 +119,11 @@ def print_repo_info(repo):
     print(f"    Language: {repo.language}")
     print(f"    Number of forks: {repo.forks}")
     print(f"    Number of stars: {repo.stargazers_count}")
+    try:
+        license_name = repo.get_license().license.name
+    except UnknownObjectException as e:
+        license_name = "(none)"
+    print(f"    License: {license_name}")
 
     file_count = 0
     for content in repo.get_contents(""):
@@ -132,11 +136,6 @@ def print_repo_info(repo):
 
         type_info = "(directory)," if content.type == "dir" else f"({content.size} bytes),"
         print(f"    #{file_count:>3}: {content.name} {type_info} last modified on {content.last_modified}.")
-
-    try:
-        print("License:", base64.b64decode(repo.get_license().content.encode()).decode())
-    except UnknownObjectException as e:
-        pass
 
 
 def print_gh_target_info(gh_target_info):
